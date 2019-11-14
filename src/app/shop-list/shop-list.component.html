@@ -1,0 +1,96 @@
+<div class="tableOuterDiv">
+    
+    <!-- Page Heading -->
+   
+    <div class="buttonDiv">
+    
+            <h1 class="h3 mb-2 text-gray-800 leftDiv">Shop list</h1>
+            <h1 class="h3 mb-2 text-gray-800 rightDiv"> 
+                    <a class="collapse-item right" [routerLink]="['']">Add Shop</a>
+                </h1>
+            </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <!---
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div> -->
+        <div class="card-body">
+            <div class="table-responsive">
+                    <form class="userform" [formGroup]="addShopForm" novalidate (ngSubmit)="addMenuSubmit()">
+                    
+                                   
+                            <div class="alert alert-success" *ngIf="addMenuResp && isAPISuccess"><i class="fa fa-close icon"></i> {{addMenuResp.message}}
+                            </div>
+                            <div class="alert alert-danger" *ngIf="addMenuError && isAPIError"><i class="fa fa-close icon"></i> {{addMenuError.message}}
+                            </div>
+                            <div>
+                                <div>
+                                    <div class="startTime">
+                                        <div class="form-group ">
+                                            
+                                            <input type="text" class="form-control " id="shopName" formControlName="shopName" placeholder="Shop Name">
+                                            <div [hidden]="validateFormKey('shopName').valid || (validateFormKey('shopName').untouched && formSubmitAttempt==false)" *ngIf="validateFormKey('shopName').errors?.required" class="errorRed">shop Name is Required</div>
+                                            <div *ngIf="validateFormKey('shopName').errors?.pattern && validateFormKey('shopName').invalid" class="errorRed"><i class="fa fa-close icon "></i> Please enter character only.</div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            
+                                             <!--<ng4geo-autocomplete (componentCallback)="autoCompleteCallback1($event)">
+                                                </ng4geo-autocomplete>-->
+                                               <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/>-->
+                                           <input class="form-control" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="Address"/>
+                                            <!-- <input type="text" class="form-control " id="Address" formControlName="Address">-->
+                                            <div [hidden]="validateFormKey('Address').valid || (validateFormKey('Address').untouched && formSubmitAttempt==false)" *ngIf="validateFormKey('Address').errors?.required" class="errorRed">Address is Required</div>
+                                        </div>
+                                        
+                                         
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-button  ">
+                                   <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name </th>
+                            <th>Category </th>
+                            <th>Address </th>
+                            <th>Owner Name </th>
+                             
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name </th>
+                            <th>Category </th>
+                            <th>Address </th>
+                            <th>Owner Name </th>
+
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr *ngFor="let item of shopItemResp | paginate: { itemsPerPage: DefaultPageLimit, currentPage: currentPageNumber,totalItems: totalNumberOfPages }" id="tr_{{item._id}}">
+                            <td class="textWidth">{{item.shopName | capitalize}} </td>
+                            <td>{{item.category | capitalize }}</td>
+                            <td class="descriptionText">{{item.Address | capitalize}}</td>
+                            <td class="descriptionText">{{item.ownerName | capitalize}}</td>
+                            
+                            
+                        </tr>
+                        <tr *ngIf="menuItemResp && menuItemResp.length==0">
+                            <td class="textAlign" rowspan="3">No Data Found </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <span id="editMenuItemTemplate" (click)="open(editMenuItemTemplate)" style="display:none;">Delete
+                    Catgory</span>
+                <pagination-controls previousLabel="" nextLabel="" (pageChange)="shopItemPageChange(currentPageNumber=$event)">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

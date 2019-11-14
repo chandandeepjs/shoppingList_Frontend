@@ -1,0 +1,78 @@
+<div class="tableOuterDiv">
+
+    <!-- Page Heading -->
+    <div class="buttonDiv">
+    
+    <h1 class="h3 mb-2 text-gray-800 leftDiv">Add Shop</h1>
+    <h1 class="h3 mb-2 text-gray-800 rightDiv"> 
+            <a class="collapse-item right" [routerLink]="['/shop-list']">Shop List</a>
+        </h1>
+    </div>
+    <!-- DataTales Example -->
+    <!--<ngx-loading [show]="loadingAnimationDiv" [config]="{
+        backdropBackgroundColour: 'rgba(255,255,255,0.3)', backdropBorderRadius: '10px',
+        primaryColour: '#dc3545', secondaryColour: '#dc3545', tertiaryColour: '#dc3545',fullScreenBackdrop:true }">
+    </ngx-loading>-->
+    <div class="card shadow mb-4">
+        <!---
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div> -->
+        <div class="card-body">
+            <div class="table-responsive">
+                <!---addMenuItemForm,$event-->
+                <form class="user" [formGroup]="addShopForm" novalidate (ngSubmit)="addMenuSubmit()">
+                    
+                                   
+                    <div class="alert alert-success" *ngIf="addMenuResp && isAPISuccess"><i class="fa fa-close icon"></i> {{addMenuResp.message}}
+                    </div>
+                    <div class="alert alert-danger" *ngIf="addMenuError && isAPIError"><i class="fa fa-close icon"></i> {{addMenuError.message}}
+                    </div>
+                    <div>
+                        <div>
+                            <div class="startTime">
+                                <div class=" form-group ">
+                                    <label>Shop Name</label>
+                                    <input type="text" class="form-control " id="shopName" formControlName="shopName">
+                                    <div [hidden]="validateFormKey('shopName').valid || (validateFormKey('shopName').untouched && formSubmitAttempt==false)" *ngIf="validateFormKey('shopName').errors?.required" class="errorRed">shop Name is Required</div>
+                                    <div *ngIf="validateFormKey('shopName').errors?.pattern && validateFormKey('shopName').invalid" class="errorRed"><i class="fa fa-close icon "></i> Please enter character only.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control " id="category" formControlName="category" >
+                                        <option value="" disabled>Select Category</option>
+                                        <option value="General store">General Store</option>
+                                        <option value="Mall">Mall</option>
+                                        <option value="Medical Store">Medical Store</option>
+                                        <option value="Supermarket">Supermarket</option>                                            
+                                    </select>
+                                    <!--<input type="text" class="form-control " id="category" formControlName="category">-->
+                                    <div [hidden]="validateFormKey('category').valid || (validateFormKey('category').untouched && formSubmitAttempt==false)" *ngIf="validateFormKey('category').errors?.required" class="errorRed">Category is Required</div>
+                                    <div *ngIf="validateFormKey('category').errors?.pattern && validateFormKey('category').invalid" class="errorRed"><i class="fa fa-close icon"></i> Please enter number only.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                     <!--<ng4geo-autocomplete (componentCallback)="autoCompleteCallback1($event)">
+                                        </ng4geo-autocomplete>-->
+                                       <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/>-->
+                                   <input class="form-control" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="Address"/>
+                                    <!-- <input type="text" class="form-control " id="Address" formControlName="Address">-->
+                                    <div [hidden]="validateFormKey('Address').valid || (validateFormKey('Address').untouched && formSubmitAttempt==false)" *ngIf="validateFormKey('Address').errors?.required" class="errorRed">Address is Required</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Owner Name</label>
+                                   
+                                    <input type="text" class="form-control " id="ownerName" formControlName="ownerName">
+                                    <div [hidden]="validateFormKey('ownerName').valid || (validateFormKey('ownerName').untouched && formSubmitAttempt==false)" *ngIf="validateFormKey('ownerName').errors?.required" class="errorRed">OwnerName is Required</div>
+                                    <div *ngIf="validateFormKey('ownerName').errors?.pattern && validateFormKey('ownerName').invalid" class="errorRed"><i class="fa fa-close icon"></i> Please enter Owner Name.</div>
+                                </div>
+                                 
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
