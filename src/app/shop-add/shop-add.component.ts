@@ -71,14 +71,14 @@ export class ShopAddComponent implements OnInit {
   }
   handleAddressChange(data: any): any { 
     let componentData1 = JSON.parse(JSON.stringify(data));
-    console.log("data",componentData1.formatted_address,componentData1.formatted_address);
+    //console.log("data",componentData1.formatted_address,componentData1.formatted_address);
     this.locationData['lat'] = componentData1.geometry.location.lat;
     this.locationData['lng'] = componentData1.geometry.location.lng;
     //this.locationData['utc_offset'] = componentData1.data.utc_offset;
     this.locationData['formattedAddress'] = componentData1.formatted_address;
     this.locationData['dataStringify'] = JSON.stringify(data); //console.log("==componentData1==", this.locationData);
 
-    console.log("data===",this.locationData,componentData1.formatted_address,componentData1.formatted_address);
+    //console.log("data===",this.locationData,componentData1.formatted_address,componentData1.formatted_address);
   }
   addMenuSubmit() {
     this.formSubmitAttempt = true;
@@ -86,6 +86,14 @@ export class ShopAddComponent implements OnInit {
     this.addMenuResp = '';
     if (this.addShopForm.valid) {
       let formData = new FormData();
+      if(!this.locationData['lng'] && !this.locationData['lat']){
+        console.log("if",this.locationData['lng']);
+        this.addMenuError ={
+          message:"Address not selected",
+        }
+        this.isAPIError = true;
+         return false;
+      }
       let coordinates = [this.locationData['lng'],this.locationData['lat']];
       formData.append('shopName', this.addShopForm.value.shopName);
       formData.append('category', this.addShopForm.value.category);
